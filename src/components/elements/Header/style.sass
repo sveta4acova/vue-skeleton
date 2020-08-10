@@ -1,0 +1,15 @@
+@import 'variables'
+@import 'mixins'
+
+.header
+  @include size()
+  @include flex-block(flex, row, center, space-between)
+  color: $grayLight
+  max-width: $contentMaxWidth
+  margin: 0 auto
+  padding: 0 15px
+
+  &__left
+    margin-right: 10px
+    flex-shrink: 0
+

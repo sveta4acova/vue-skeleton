@@ -1,0 +1,11 @@
+@import 'mixins'
+
+.layout-content
+  width: 100%
+
+  &_center
+    @include flex-block(flex, row, center, center)
+    flex: 1
+
+  &_full
+    height: 100%

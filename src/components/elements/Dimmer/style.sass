@@ -1,0 +1,9 @@
+@import 'variables'
+@import 'mixins'
+
+.dimmer
+  @include size(100%, 100%)
+  @include position(absolute, 0, auto, 0)
+  @include flex-block(flex, row, center, center)
+  background-color: rgba(255, 255, 255, .7)
+  color: $grayDark

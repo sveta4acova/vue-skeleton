@@ -1,0 +1,26 @@
+@import 'variables'
+@import 'mixins'
+
+.layout-page
+  @include flex-block(flex, column, stretch)
+  min-height: 100vh
+
+  &__header,
+  &__main
+    width: 100%
+
+  &__header
+    @include position(fixed)
+    height: $headerHeight
+    flex-shrink: 0
+    background-color: $mint
+    z-index: 2
+
+  &__main
+    @include flex-block(flex, column)
+    position: relative
+    flex: 1
+    max-width: $contentMaxWidth
+    margin: 0 auto
+    padding: calc(15px + #{$headerHeight}) 15px 15px
+

@@ -2,13 +2,41 @@ if (typeof process.env.NODE_ENV === 'undefined') process.env.NODE_ENV = 'product
 
 const path = require('path');
 const webpack = require('webpack');
-const VueLoader = require('vue-loader');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpackConfigForIde = require('./webpack-config-for-ide');
 const alias = webpackConfigForIde.resolve.alias;
+const rulesForSass = [
+  'vue-style-loader',
+  'style-loader',
+  { loader: 'css-loader', options: { sourceMap: true } },
+  { loader: 'postcss-loader', options: { sourceMap: true } },
+  {
+    loader: 'sass-loader',
+    options: {
+      sassOptions: {
+        indentedSyntax: true,
+        sourceMap: true,
+        data: `
+          @import "variables";
+          @import "mixins";
+        `,
+        includePaths: [
+          path.resolve(__dirname, './src/config/styles')
+        ]
+      },
+    },
+  },
+];
+const rulesForCss = [
+  'vue-style-loader',
+  'style-loader',
+  { loader: 'css-loader', options: { sourceMap: true } },
+  { loader: 'postcss-loader', options: { sourceMap: true } },
+];
 
 const config = {
   mode: process.env.NODE_ENV,
@@ -19,6 +47,7 @@ const config = {
     filename: '[name].js',
   },
   plugins: [
+    new VueLoaderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -29,14 +58,14 @@ const config = {
       filename: './index.html',
       // favicon: './favicon.ico',
     }),
-    new VueLoader.VueLoaderPlugin(),
   ],
   resolve: {
-    extensions: [ '.js', '.vue', '.json', '.sass', '.css' ],
+    extensions: [ '.js', '.vue', '.json' ],
     modules: [ path.resolve(__dirname, 'src'), 'node_modules' ],
     alias: {
-      ...alias,
+      // 'vue$': process.env.NODE_ENV === 'development' ? 'vue/dist/vue.runtime.js' : 'vue/dist/vue.runtime.min.js',
       vue$: 'vue/dist/vue.esm.js',
+      ...alias,
     },
   },
   module: {
@@ -51,24 +80,8 @@ const config = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          css: [
-            'vue-style-loader',
-            'style-loader',
-            { loader: 'css-loader', options: { sourceMap: true } },
-            'postcss-loader',
-          ],
-          sass: [
-            'vue-style-loader',
-            'style-loader',
-            { loader: 'css-loader', options: { sourceMap: true } },
-            {
-              loader: 'sass-loader',
-              options: {
-                indentedSyntax: true,
-                sourceMap: true,
-              },
-            },
-          ],
+          css: rulesForCss,
+          sass: rulesForSass,
         },
       },
       {
@@ -78,30 +91,19 @@ const config = {
       },
       {
         test: /\.sass$/,
-        use: [
-          'vue-style-loader',
-          'style-loader',
-          { loader: 'css-loader', options: { sourceMap: true } },
-          { loader: 'postcss-loader', options: { sourceMap: true } },
-          {
-            loader: 'sass-loader',
-            options: {
-              sassOptions: {
-                indentedSyntax: true,
-                sourceMap: true,
-              },
-            },
-          },
-        ],
+        use: rulesForSass,
       },
       {
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'style-loader',
-          { loader: 'css-loader', options: { sourceMap: true } },
-          { loader: 'postcss-loader', options: { sourceMap: true } },
-        ],
+        use: rulesForCss,
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-plain-loader'
+      },
+      {
+        test: /\.(svg|png|swf|jpg|otf|eot|ttf|woff|woff2)(\?.*)?$/,
+        use: [ { loader: 'url-loader', options: { limit: 1000, name: 'assets/[hash].[ext]', esModule: false } } ],
       },
     ],
   },
@@ -129,6 +131,7 @@ if (process.env.NODE_ENV === 'production') {
     },
     proxy: {
       '/api/**': {
+        baseURL: '',
         target: '',
         secure: true,
         changeOrigin: true,

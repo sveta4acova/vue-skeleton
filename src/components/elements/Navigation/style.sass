@@ -1,0 +1,27 @@
+@import 'variables'
+@import 'mixins'
+
+.navigation
+  &__link
+    position: relative
+    font-size: 16px
+    color: $blueDark
+    font-weight: 700
+    transition: all .5s ease
+
+    &:after
+      @include position(absolute, 0, auto, auto, -2px)
+      @include size(100%, 2px)
+      content: ''
+      background-color: $blueDark
+      transform: translateY(-3px)
+      opacity: 0
+      transition: all .2s linear
+
+    &:not(:last-child)
+      margin-right: 15px
+
+    &.active:after,
+    &:hover:after
+      transform: translateY(0)
+      opacity: 1

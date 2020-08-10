@@ -13,31 +13,38 @@
   },
   "plugins": ["babel"],
   "rules": {
-    "semi": "error",
-    "no-multi-spaces": "error",
-    "block-spacing": ["error", "always"],
-    "quotes": ["error", "single"],
-    "max-len": ["error", { "code":  120 }],
-    "object-curly-spacing": ["error", "always"],
-    "array-bracket-spacing": ["error", "always"],
-    "space-before-function-paren": ["error", "always"],
-    "space-before-blocks": ["error", "always"],
-    "keyword-spacing": ["error", { "before": true, "after": true }],
-    "camelcase": ["error", { "properties": "never" }],
-    "comma-spacing": ["error", { "before": false, "after": true }],
-    "no-mixed-spaces-and-tabs": "error",
-    "no-multi-str": "error",
-    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
-    "space-infix-ops": "error",
-    "indent": ["error", 2],
-    "no-trailing-spaces": "error",
+    "semi": "warn",
+    "no-multi-spaces": "warn",
+    "block-spacing": ["warn", "always"],
+    "quotes": ["warn", "single"],
+    "max-len": ["warn", { "code":  130 }],
+    "object-curly-spacing": ["warn", "always"],
+    "array-bracket-spacing": ["warn", "always"],
+    "space-before-blocks": ["warn", "always"],
+    "keyword-spacing": ["warn", { "before": true, "after": true }],
+    "camelcase": ["warn", { "properties": "never" }],
+    "comma-spacing": ["warn", { "before": false, "after": true }],
+    "no-mixed-spaces-and-tabs": "warn",
+    "no-multi-str": "warn",
+    "no-multiple-empty-lines": ["warn", { "max": 1, "maxEOF": 0 }],
+    "space-infix-ops": "warn",
+    "indent": ["warn", 2],
+    "no-trailing-spaces": "warn",
+    "vue/html-indent": ["warn", 2, {
+      "attribute": 1,
+      "baseIndent": 1,
+      "closeBracket": 0,
+      "alignAttributesVertically": true,
+      "ignores": []
+    }],
+    "no-unused-vars": "warn"
   },
   "overrides": [
     {
       "files": ["*.vue"],
       "rules": {
         "indent": "off",
-        "vue/script-indent": ["error", 2, { "baseIndent": 1 }]
+        "vue/script-indent": ["warn", 2, { "baseIndent": 1 }]
       }
     }
   ]

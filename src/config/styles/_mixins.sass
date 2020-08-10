@@ -1,0 +1,26 @@
+@mixin flex-block($display: flex, $direction: row, $alignItems: flex-start, $justifyContent: flex-start)
+  display: $display
+  flex-direction: $direction
+  align-items: $alignItems
+  justify-content: $justifyContent
+
+@mixin position($position: absolute, $left: 0, $right: 0, $top: auto, $bottom: auto)
+  position: $position
+  left: $left
+  right: $right
+  top: $top
+  bottom: $bottom
+
+@mixin size($width: 100%, $height: 100%)
+  width: $width
+  height: $height
+
+@mixin font-face($fontFolder, $fontSubfolder, $fontName)
+  font-family: $fontName
+  src: url("@assets/fonts/#{$fontFolder}/#{$fontSubfolder}/#{$fontName}.eot"),
+  url("@assets/fonts/#{$fontFolder}/#{$fontSubfolder}/#{$fontName}.eot?@iefix") format("embedded-opentype"),
+  url("@assets/fonts/#{$fontFolder}/#{$fontSubfolder}/#{$fontName}.ttf") format("truetype"),
+  url("@assets/fonts/#{$fontFolder}/#{$fontSubfolder}/#{$fontName}.woff") format("woff"),
+  url("@assets/fonts/#{$fontFolder}/#{$fontSubfolder}/#{$fontName}.woff2") format("woff2")
+  font-weight: normal
+  font-style: normal
