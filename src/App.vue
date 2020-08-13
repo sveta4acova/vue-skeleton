@@ -1,7 +1,7 @@
 <template lang="pug">
   layout-page
     template(v-slot:header)
-      v-header(:isAuthenticated="!!$store.state.session.token")
+      v-header(:isAuthenticated="$store.state.session.expiresOut > new Date().getTime()")
     template(v-slot:main)
       router-view
 </template>
