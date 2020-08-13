@@ -9,5 +9,9 @@ export default {
         returnSecureToken: true,
       }
     );
+  },
+
+  getUser(token) {
+    return axios.get(`https://vue-test-bd584.firebaseio.com/users.json?auth=${token}`);
   }
 };

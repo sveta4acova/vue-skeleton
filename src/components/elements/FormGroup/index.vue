@@ -29,7 +29,7 @@
         default: 'text',
       },
       modifiers: {
-        type: String || Array,
+        type: [ String, Array ],
         defaultValue: ''
       },
       label: {

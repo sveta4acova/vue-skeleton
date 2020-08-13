@@ -62,7 +62,11 @@
         this.$store.dispatch('session/login', {
           email: this.email,
           password: this.password,
-        }).then(() => this.$router.push('/'));
+        }).then(res => {
+          if (res) {
+            this.$router.push('/');
+          }
+        });
       }
     },
     validations: {

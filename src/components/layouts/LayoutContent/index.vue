@@ -9,7 +9,7 @@
   export default {
     props: {
       modifiers: {
-        value: String || Array,
+        value: [ String, Array ],
         defaultValue: '',
       }
     },

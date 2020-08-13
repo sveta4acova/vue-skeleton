@@ -11,7 +11,7 @@
   export default {
     props: {
       data: {
-        type: Object || String,
+        type: [ String, Object ],
       },
       messages: {
         type: Object,
